@@ -98,3 +98,105 @@ GET http://localhost:8080/library/6737c95be435d0049ed188e6/6738c532fada9d83c9bd1
 
 ###Return a book from a customer with ids
 DELETE http://localhost:8080/library/6737c95be435d0049ed188e6/6738c532fada9d83c9bd1d88 HTTP/1.1
+
+
+//Production
+
+###Get all customers
+GET https://cse341-6f28.onrender.com/customers 
+
+###Get a customer by id
+GET https://cse341-6f28.onrender.com/customers/6737c95be435d0049ed188e6
+
+###Get a customer (with id) with detailed borrows
+GET https://cse341-6f28.onrender.com/customers/6737c95be435d0049ed188e6/borrows
+
+###Create a new customer
+POST https://cse341-6f28.onrender.com/customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName":"Heitor",
+    "lastName":"Cazado",
+    "email":"heitor@me.com",
+    "dob":"06/28/1993",
+    "borrowedBooks":""
+}
+
+###Update a customer with id
+PUT https://cse341-6f28.onrender.com/customers/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName":"Heitor",
+    "lastName":"Chaves",
+    "email":"hc@mail.me",
+    "dob":"06/28/1993",
+    "borrowedBooks":[]
+}
+
+###Delete a customer with id
+DELETE https://cse341-6f28.onrender.com/customers/ HTTP/1.1
+
+###Get all books
+GET https://cse341-6f28.onrender.com
+
+###get a book by id
+GET https://cse341-6f28.onrender.com/books/6738c532fada9d83c9bd1d88
+
+###create a new book
+POST https://cse341-6f28.onrender.com/books HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Harry Potter and the Philosopher's stone",
+    "isbn": "978-0-7475-3269-9",
+    "author": "J. K. Rowling",
+    "category": "Fantasy",
+    "quantity": "4",
+    "availableQuantity": "3"
+}
+
+###create a new book
+POST https://cse341-6f28.onrender.com/books HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Saints Volume 2: No Unhallowed Hand",
+    "isbn": "978-1-6297-2648-9",
+    "author": "['Scott Hales','Angela Hallstrom']",
+    "category": "History",
+    "quantity": "4",
+    "availableQuantity": "3"
+}
+
+###create a new book
+POST https://cse341-6f28.onrender.com/books HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "The Secret",
+    "isbn": "978-1-5827-0170-7",
+    "author": "Rhonda Byrne",
+    "category": "self-improvement",
+    "quantity": "2",
+    "availableQuantity": "1"
+}
+
+###update a book with id
+PUT https://cse341-6f28.onrender.com/books/6738c532fada9d83c9bd1d88 HTTP/1.1
+Content-Type: application/json
+
+{
+    "quantity": "4",
+    "availableQuantity": "1"
+}
+
+###delete a book with id
+DELETE https://cse341-6f28.onrender.com/books/6738c487ffe64b4aa8dd0d9c
+
+###Borrow a book to a customer with ids
+GET https://cse341-6f28.onrender.com/library/6737c95be435d0049ed188e6/6738c532fada9d83c9bd1d88
+
+###Return a book from a customer with ids
+DELETE https://cse341-6f28.onrender.com/library/6737c95be435d0049ed188e6/6738c532fada9d83c9bd1d88 HTTP/1.1

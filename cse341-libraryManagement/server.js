@@ -24,7 +24,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/", require("./routes"));
 
 process.on("uncaughtException", (error, origin)=>{
-    console.log(process.stderr, `caught exception: ${error}\nException origin: ${origin}`);
+    console.log(`caught exception: ${error}\nException origin: ${origin}`);
 });
 
 
