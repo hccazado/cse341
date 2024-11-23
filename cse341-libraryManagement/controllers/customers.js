@@ -98,7 +98,6 @@ const controller = {
             res.status(400).json({message: "Must provide a valid customer id"});
         }
         try{
-            console.log("Delete customer")
             const doc = await Customer.findOneAndDelete({_id:req.params.id});
             res.status(204).send();
         } catch(error) {
