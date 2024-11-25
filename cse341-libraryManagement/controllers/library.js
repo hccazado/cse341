@@ -11,10 +11,10 @@ controller = {
         const bookId = req.params.bookid;
         
         if(!utilities.validateObjectId(customerId)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
         if(!utilities.validateObjectId(bookId)){
-            res.status(400).json({message: "Must provide a valid book id"});
+            return next({message:"Must provide a valid book id",statusCode: 401});
         }
 
         const customer = await Customer.findById(customerId);
@@ -34,15 +34,15 @@ controller = {
                     res.sendStatus(204);
                 }
                 else{
-                    res.status(400).json({message: "Something went wrong borrowing customer's book"});
+                    return next({message: "Something went wrong borrowing customer's book"});
                 }
             }
             else{
-                res.status(400).json({message: "Book unavailable or customer already have this book"});
+                return next({message: "Book unavailable or customer already have this book"});
             }
         }
         else{
-            res.status(400).json({message: "Couldn't find customer or book"});
+            return next({message: "Couldn't find customer or book", statusCode: 404});
         }
     },
     returnBook: async (req, res, next) => {
@@ -53,10 +53,10 @@ controller = {
         const bookId = req.params.bookid;
         
         if(!utilities.validateObjectId(customerId)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
         if(!utilities.validateObjectId(bookId)){
-            res.status(400).json({message: "Must provide a valid book id"});
+            return next({message:"Must provide a valid book id",statusCode: 401});
         }
 
         const customer = await Customer.findById(customerId);
@@ -75,15 +75,15 @@ controller = {
                     res.sendStatus(204);
                 }
                 else{
-                    res.status(400).json({message: "Something went wrong returning customer's book"});
+                    return next({message: "Something went wrong returning customer's book"});
                 }
             }
             else{
-                res.status(400).json({message: "Customer doesn't have this book"});
+                return next({message: "Customer doesn't have this book", statusCode: 401});
             }
         }
         else{
-            res.status(400).json({message: "Couldn't find customer or book"});
+            return next({message: "Couldn't find customer or book", statusCode: 404});
         }
     }
 }

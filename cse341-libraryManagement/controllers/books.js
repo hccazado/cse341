@@ -11,7 +11,7 @@ const controller = {
             const docs = await Book.find();
             res.status(200).json(docs);
         } catch (error) {
-            throw createError("500","MongoDB error. "+error);
+            return next(error);
         }
     },
     oneBook: async (req, res, next)=>{
@@ -19,14 +19,13 @@ const controller = {
             #swagger.description = Returns a stored book with id
         */
         if(!db.mongoose.isValidObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid book id"});
-            throw createError("400", "Must provide a valid book id");
+            return next({message:"Must provide a valid book id",statusCode: 401});
         }
         try{
             const doc = await Book.findById(req.params.id);
             res.status(200).json(doc);
         } catch(error) {
-            throw createError("500","MongoDB error. "+error);
+            return next(error);
         }
     },
     createBook: async (req, res, next)=>{
@@ -45,7 +44,7 @@ const controller = {
             const doc = await book.save();
             res.status(200).json(doc);
         }catch(error){
-            throw createError("500","MongoDB Error. "+error);
+            return next(error);
         }
     },
     updateBook: async (req, res, next) => {
@@ -53,7 +52,7 @@ const controller = {
             #swagger.description = Update a book with id
         */
         if(!db.mongoose.isValidObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid book id"});
+            return next({message:"Must provide a valid book id",statusCode: 401});
         }
         
         const newData = {
@@ -72,7 +71,7 @@ const controller = {
             })
             res.status(204).send();
         } catch(error) {
-            throw createError("500","MongoDB Error. "+error);
+            next({message:"Something went wrong updating data"});
         }
     },
     deleteBook: async (req, res, next) => {
@@ -80,13 +79,13 @@ const controller = {
             #swagger.description = Delete a book with id
         */
         if(!db.mongoose.isValidObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid book id"});
+            return next({message:"Must provide a valid book id",statusCode: 401});
         }
         try{
             const result = await Book.findOneAndDelete({_id: req.params.id});
             res.status(204).send();
         } catch(error){
-            throw createError("500","MongoDB Error. "+error);
+            next(error);
         }
     },
 }

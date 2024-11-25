@@ -3,10 +3,10 @@ const passport = require("passport");
 const routes = express.Router();
 
 routes.get("/login", passport.authenticate("github"), (req, res) => {});
-routes.get("/logout", (req, res) => {
-    req.logout((error)=>{
-        if(error) {
-            return next(error);
+routes.get("/logout", (err, req, res, next) => {
+    req.logout((err)=>{
+        if(err) {
+            next(err);
         }
         res.redirect("/");
     });

@@ -62,6 +62,16 @@ app.use("/github/callback", passport.authenticate("github",{
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/", require("./routes"));
 
+app.use((err, req, res, next) =>{
+    const errStatus = err.statusCode || 500;
+    const errMessage = err.message || "Something went wrong";
+    res.status(errStatus).json({
+        status: errStatus,
+        message: errMessage,
+        stack: process.env.NODE_ENV === 'development' ? err.stack : {}
+    })
+});
+
 
 process.on("uncaughtException", (error, origin)=>{
     console.log(`caught exception: ${error}\nException origin: ${origin}`);

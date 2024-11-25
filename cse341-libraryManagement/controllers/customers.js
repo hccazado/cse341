@@ -12,7 +12,7 @@ const controller = {
             const docs = await Customer.find();
             res.status(200).json(docs);
         } catch(error) {
-            throw createError("500","MongoDB error(Customer). "+error);
+            return next(error);
         }
     },
     oneCustomer: async (req, res, next) =>{
@@ -20,13 +20,13 @@ const controller = {
             #swagger.description = Returns a customer with id
         */
         if(!utilities.validateObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
         try{
             const doc = await Customer.findById(req.params.id);
             res.status(200).json(doc);
         } catch(error) {
-            throw createError("500","MongoDB error(Customer). "+error);
+            next(error);
         }
     },
     detailCustomerBorrows: async (req, res, next)=>{
@@ -34,13 +34,13 @@ const controller = {
             #swagger.description = Returns a customer with id, and details about its borrowd books
         */
         if(!utilities.validateObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
         try{
             const docs = await Customer.findOne({_id: req.params.id}).populate("borrowedBooks");
             res.status(200).json(docs);
         } catch(error) {
-            throw createError("500","MongoDB error(Customer). "+error);
+            return next(error);
         }
     },
     createCustomer: async (req, res, next) =>{
@@ -59,7 +59,7 @@ const controller = {
             let doc = await customer.save();
             res.status(200).json(doc);
         }catch(error){
-            throw createError("500","MongoDB error(Customer). "+error);
+            return next(error);
         }
     },
     updateCustomer: async (req, res, next) =>{
@@ -67,7 +67,7 @@ const controller = {
             #swagger.description = Update a customer with id
         */
         if(!utilities.validateObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
 
         const newCustomerData = {
@@ -86,7 +86,7 @@ const controller = {
                 res.status(204).send();
             })
         } catch(error) {
-            throw createError("500","MongoDB error(Customer). "+error);
+            return next(error);
         }
 
     },
@@ -95,13 +95,13 @@ const controller = {
             #swagger.description = Delete a customer with ID
         */
         if(!utilities.validateObjectId(req.params.id)){
-            res.status(400).json({message: "Must provide a valid customer id"});
+            return next({message:"Must provide a valid customer id",statusCode: 401});
         }
         try{
             const doc = await Customer.findOneAndDelete({_id:req.params.id});
             res.status(204).send();
         } catch(error) {
-            throw createError("500","MongoDB error(Customer). "+error);
+            return next(error);
         }
     },
 }
