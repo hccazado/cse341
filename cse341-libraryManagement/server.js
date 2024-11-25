@@ -51,7 +51,15 @@ passport.use(new GitHubStrategy({
     function(accessToken, refreshToken, profile, done) {
         return done(null, profile);
     }
-))
+));
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+    done(null, user);
+});
 
 app.use("/github/callback", passport.authenticate("github",{
     failureRedirect: "/api-docs", session: false }),
@@ -72,11 +80,9 @@ app.use((err, req, res, next) =>{
     })
 });
 
-
 process.on("uncaughtException", (error, origin)=>{
     console.log(`caught exception: ${error}\nException origin: ${origin}`);
 });
-
 
 const PORT = process.env.PORT || 8080;
 
