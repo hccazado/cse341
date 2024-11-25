@@ -6,7 +6,7 @@ routes.get("/login", passport.authenticate("github"), (req, res) => {});
 routes.get("/logout", (err, req, res, next) => {
     req.logout((err)=>{
         if(err) {
-            next(err);
+            return next(err);
         }
         res.redirect("/");
     });
