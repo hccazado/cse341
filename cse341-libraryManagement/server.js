@@ -8,7 +8,7 @@ const swaggerDocument = require('./swagger-output.json');
 const passport = require("passport");
 const session = require("express-session");
 const GitHubStrategy = require("passport-github2").Strategy;
-//const cors = require("cors");
+const cors = require("cors");
 
 dotEnv.config();
 
@@ -33,15 +33,15 @@ db.mongoose.connect(db.url).then(()=>{
 
 app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin", "*",);
-    res.setHeader("Access-COntrol-Allow-Headers", 
+    res.setHeader("Access-Control-Allow-Headers", 
         "Origin, X-requested-With, Content-Type, Accept, Z-Key, Authorization");
     res.setHeader("Access-Control-Allow-Methods", 
         "POST, GET, PUT, PATCH, OPTIONS DELETE");
     next();
 });
 
-// app.use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }));
-// app.use(cors({ origin: "*" }));
+app.use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }));
+app.use(cors({ origin: "*" }));
 
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
