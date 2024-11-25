@@ -8,7 +8,7 @@ const swaggerDocument = require('./swagger-output.json');
 const passport = require("passport");
 const session = require("express-session");
 const GitHubStrategy = require("passport-github2").Strategy;
-const cors = require("cors");
+//const cors = require("cors");
 
 dotEnv.config();
 
@@ -40,8 +40,8 @@ app.use((req,res,next)=>{
     next();
 });
 
-app.use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }));
-app.use(cors({ origin: "*" }));
+// app.use(cors({ methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"] }));
+// app.use(cors({ origin: "*" }));
 
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
