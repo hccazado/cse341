@@ -1,6 +1,7 @@
 const db = require("../models");
 const Book = require("../models/books");
 const createError = require("http-errors");
+const utilities = require("../services/utilities");
 
 const controller = {
     allBooks: async (req, res, next)=>{
@@ -18,7 +19,7 @@ const controller = {
         /*
             #swagger.description = Returns a stored book with id
         */
-        if(!db.mongoose.isValidObjectId(req.params.id)){
+        if(!utilities.validateObjectId(req.params.id)){
             return next({message:"Must provide a valid book id",statusCode: 401});
         }
         try{
@@ -51,7 +52,7 @@ const controller = {
         /*
             #swagger.description = Update a book with id
         */
-        if(!db.mongoose.isValidObjectId(req.params.id)){
+        if(!utilities.validateObjectId(req.params.id)){
             return next({message:"Must provide a valid book id",statusCode: 401});
         }
         
@@ -78,7 +79,7 @@ const controller = {
         /*
             #swagger.description = Delete a book with id
         */
-        if(!db.mongoose.isValidObjectId(req.params.id)){
+        if(!utilities.validateObjectId(req.params.id)){
             return next({message:"Must provide a valid book id",statusCode: 401});
         }
         try{

@@ -87,7 +87,7 @@ Content-Type: application/json
 
 {
     "quantity": "4",
-    "availableQuantity": "1"
+    "availableQuantity": "2"
 }
 
 ###delete a book with id

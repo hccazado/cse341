@@ -7,7 +7,7 @@ const {isAuthenticated} = require("../services/authenticate");
 routes.get("/", controller.allBooks);
 routes.post("/", isAuthenticated, validateBook.validationRules(), validateBook.validate, controller.createBook);
 routes.get("/:id", controller.oneBook);
-routes.put("/:id", isAuthenticated, controller.updateBook);
+routes.put("/:id", isAuthenticated, validateBook.validationRules(), validateBook.validate, controller.updateBook);
 routes.delete("/:id", isAuthenticated, controller.deleteBook);
 
 module.exports = routes;
